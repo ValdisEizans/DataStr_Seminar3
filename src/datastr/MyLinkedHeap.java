@@ -56,7 +56,7 @@ public class MyLinkedHeap<Ttype> {
 				lastNode = newNode;
 				howManyElements++;
 				level++;
-				//TODO izsaukt reheapup funkciju
+				reHeapUp(newNode);	
 				return;
 			}
 			
@@ -66,7 +66,7 @@ public class MyLinkedHeap<Ttype> {
 				newNode.setParrentNode(lastNode);
 				lastNode = newNode;
 				howManyElements++;
-				//TODO izsaukt reheapup funkciju
+				reHeapUp(newNode);	
 				return;
 			}
 
@@ -78,7 +78,7 @@ public class MyLinkedHeap<Ttype> {
 				
 				lastNode = newNode;
 				howManyElements++;
-				//TODO izsaukt reheapup funkciju
+				reHeapUp(newNode);	
 			}
 			/*kad japarlec uz nakamo limeni
 			2^0 = 1 elements 0. limeni
@@ -107,14 +107,33 @@ public class MyLinkedHeap<Ttype> {
 				lastNode = newNode;
 				howManyElements++;
 				level++;
-				//TODO izsaukt reheapup funkciju
+				reHeapUp(newNode);	
 				return;
 			}
 			//TODO izveidot pedejo scenariju kurs no laba berna var parlekt uz blakus apakskoka kreiso bernu
 		}
 	}
 	
+	//MAX kaudzes gadijums
+	private void reHeapUp(MyNode<Ttype> nodeTemp) {
+		//vai blokam ir vecaks
+		if(nodeTemp.getParrentNode() != null) {
+			MyNode<Ttype> parentTempNode = nodeTemp.getParrentNode();
+			//salidizna vai bloka vertiba lielaka par vecaka vertibu
+			if(((Comparable)nodeTemp.getElement()).compareTo(parentTempNode.getElement()) > 0) {
+				//mainam vieta vertibas
+				swap(nodeTemp, parentTempNode);
+				//izsauc rekursivi uz vecaku bloku
+				reHeapUp(parentTempNode);
+			}
+		}
+	}
 	
+	private void swap(MyNode<Ttype> node1, MyNode<Ttype> node2) {
+		Ttype temp = node1.getElement();
+		node1.setElement(node2.getElement());
+		node2.setElement(temp);
+	}
 	
 	
 	
