@@ -4,7 +4,8 @@ public class MyLinkedHeap<Ttype> {
 	//Mainigie
 	private MyNode<Ttype> rootNode = null;
 	private MyNode<Ttype> lastNode = null;
-	int howManyElements = 0;
+	private int howManyElements = 0;
+	private int level = 0;
 	
 	//geteri, prieks blokiem nevajag
 	public int getHowManyElements() {
@@ -29,7 +30,7 @@ public class MyLinkedHeap<Ttype> {
 		}
 	}
 	
-	//ievietot bloku
+	//pievienot bloku
 	public void engueue(Ttype element) throws Exception{
 		if(isFull()) {
 			throw new Exception("Kaudze ir pilna, nevar pievienot elementu!");
@@ -44,10 +45,73 @@ public class MyLinkedHeap<Ttype> {
 			lastNode = newNode;
 			howManyElements++;
 		}
+		//ja kaudze ir jau bloki, pievieno vel vienu bloks
 		else {
+			MyNode<Ttype> newNode = new MyNode<Ttype>(element);
+
+			//bus saknes elementa kreisais berns
+			if(howManyElements == 1) {
+				rootNode.setLeftChildNode(newNode);
+				newNode.setParrentNode(rootNode);
+				lastNode = newNode;
+				howManyElements++;
+				level++;
+				//TODO izsaukt reheapup funkciju
+				return;
+			}
 			
+			//pedejam blokam nav neviena berna 
+			if(lastNode.getLeftChildNode() == null && lastNode.getRightChildNode() == null) {
+				lastNode.setLeftChildNode(newNode);
+				newNode.setParrentNode(lastNode);
+				lastNode = newNode;
+				howManyElements++;
+				//TODO izsaukt reheapup funkciju
+				return;
+			}
+
+			//pedejam blokam blakus nav neviena bloka labaja puse
+			if(lastNode.getParrentNode() != null && lastNode.getParrentNode().getRightChildNode() == null) {
+				MyNode<Ttype> parentNodeTemp = lastNode.getParrentNode();
+				parentNodeTemp.setRightChildNode(newNode);
+				newNode.setParrentNode(parentNodeTemp);
+				
+				lastNode = newNode;
+				howManyElements++;
+				//TODO izsaukt reheapup funkciju
+			}
+			/*kad japarlec uz nakamo limeni
+			2^0 = 1 elements 0. limeni
+			2^1 = 2 elementi 1. limeni
+			2^2 = 4 elementi 2. limeni
+			*/
+			int sum = 0;
+			//noskaidro, cik bliku lidz sim limenim ieskaitot
+			for(int i = 0; i <= level; i++) {
+				sum = (int) (sum + Math.pow(2, i));
+			}
+			
+			//lastNode ka pedejais bloks sava limeni
+			if(sum == howManyElements) {
+				MyNode<Ttype> currentNode = rootNode;
+				
+				//blokam kreisais berns, lec uz to
+				while(currentNode.getLeftChildNode() != null) {
+					currentNode = currentNode.getLeftChildNode();
+				}
+				lastNode = currentNode;
+				
+				lastNode.setLeftChildNode(newNode);
+				newNode.setParrentNode(lastNode);
+				
+				lastNode = newNode;
+				howManyElements++;
+				level++;
+				//TODO izsaukt reheapup funkciju
+				return;
+			}
+			//TODO izveidot pedejo scenariju kurs no laba berna var parlekt uz blakus apakskoka kreiso bernu
 		}
-		
 	}
 	
 	
