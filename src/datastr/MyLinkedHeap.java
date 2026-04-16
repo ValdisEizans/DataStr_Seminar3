@@ -35,9 +35,11 @@ public class MyLinkedHeap<Ttype> {
 		if(isFull()) {
 			throw new Exception("Kaudze ir pilna, nevar pievienot elementu!");
 		}
+		
 		if(element == null) {
 			throw new Exception("Nav noradits elements!");
 		}
+		
 		//ja pirmais bloks
 		if(isEmpty()) {
 			MyNode<Ttype> newNode = new MyNode<Ttype>(element);
@@ -60,16 +62,6 @@ public class MyLinkedHeap<Ttype> {
 				return;
 			}
 			
-			//pedejam blokam nav neviena berna 
-			if(lastNode.getLeftChildNode() == null && lastNode.getRightChildNode() == null) {
-				lastNode.setLeftChildNode(newNode);
-				newNode.setParrentNode(lastNode);
-				lastNode = newNode;
-				howManyElements++;
-				reHeapUp(newNode);	
-				return;
-			}
-
 			//pedejam blokam blakus nav neviena bloka labaja puse
 			if(lastNode.getParrentNode() != null && lastNode.getParrentNode().getRightChildNode() == null) {
 				MyNode<Ttype> parentNodeTemp = lastNode.getParrentNode();
@@ -78,8 +70,10 @@ public class MyLinkedHeap<Ttype> {
 				
 				lastNode = newNode;
 				howManyElements++;
-				reHeapUp(newNode);	
+				reHeapUp(newNode);
+				return;
 			}
+
 			/*kad japarlec uz nakamo limeni
 			2^0 = 1 elements 0. limeni
 			2^1 = 2 elementi 1. limeni
@@ -90,7 +84,7 @@ public class MyLinkedHeap<Ttype> {
 			for(int i = 0; i <= level; i++) {
 				sum = (int) (sum + Math.pow(2, i));
 			}
-			
+
 			//lastNode ka pedejais bloks sava limeni
 			if(sum == howManyElements) {
 				MyNode<Ttype> currentNode = rootNode;
@@ -110,6 +104,18 @@ public class MyLinkedHeap<Ttype> {
 				reHeapUp(newNode);	
 				return;
 			}
+			else {
+				//pedejam blokam nav neviena berna 
+				if(lastNode.getLeftChildNode() == null && lastNode.getRightChildNode() == null) {
+					lastNode.setLeftChildNode(newNode);
+					newNode.setParrentNode(lastNode);
+					lastNode = newNode;
+					howManyElements++;
+					reHeapUp(newNode);	
+					return;
+				}				
+			}
+
 			//TODO izveidot pedejo scenariju kurs no laba berna var parlekt uz blakus apakskoka kreiso bernu
 		}
 	}
@@ -159,6 +165,24 @@ public class MyLinkedHeap<Ttype> {
 				printHelper(nodeTemp.getRightChildNode());
 			}
 		}
+	}
+	
+	//pievienot bloku
+	public void degueue() throws Exception{
+		//veic visas darbibas
+		
+		//saglaba root elementa vertibas
+		
+		//pedejo bloku ieliek root bloka
+		
+		//samazina howManyElements
+		
+		//lastNode samainit
+		
+		//reheapDown
+		
+		//atgriez elementu, kurs bija sakuma root bloka
+		
 	}
 	
 	
