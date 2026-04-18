@@ -11,7 +11,10 @@ public class MainService {
 			kaudze.engueue(50);
 			kaudze.engueue(35);
 			kaudze.engueue(15);
-//			kaudze.engueue(10);
+			kaudze.engueue(10);
+			kaudze.print();
+			System.out.println("----------------------------------------------------------------------------");
+			kaudze.degueue();
 			kaudze.print();
 		}
 		catch (Exception e) {

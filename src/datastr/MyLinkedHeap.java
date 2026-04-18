@@ -169,19 +169,22 @@ public class MyLinkedHeap<Ttype> {
 	
 	//pievienot bloku
 	public void degueue() throws Exception{
-		//veic visas darbibas
+		// veicam visas pārbaudes
+		if(isEmpty()) {
+			throw new Exception("Kaudze ir tukša, nevar dzest elementu!");
+		}
+		// saglabasim root elementu mainīgaja
+		MyNode<Ttype> TempNode = rootNode;
+		// pedejo bloka vertību ieliekam root blokā
+		rootNode.setElement(lastNode.getElement());
+		// samakzinam howManyElements
+		howManyElements--;
+		// lastNode samainīt (level samazinat, kur tas ir nepieciešams)
 		
-		//saglaba root elementa vertibas
+		// reheapDown izsaukt
 		
-		//pedejo bloku ieliek root bloka
-		
-		//samazina howManyElements
-		
-		//lastNode samainit
-		
-		//reheapDown
-		
-		//atgriez elementu, kurs bija sakuma root bloka
+		// atgriežam elementu, kurš bija sākumā saknes blokā
+		System.out.println(TempNode.getElement());
 		
 	}
 	
