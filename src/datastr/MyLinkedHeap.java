@@ -110,13 +110,18 @@ public class MyLinkedHeap<Ttype> {
 			else {
 				//pedejam blokam abi berni
 				if(lastNode.getParrentNode().getLeftChildNode()!= null && lastNode.getParrentNode().getRightChildNode()!=null){
-						MyNode currentParent = findInsertionNode();
-						currentParent.setLeftChildNode(newNode);
-						newNode.setParrentNode(currentParent);
-						lastNode = newNode;
-						reHeapUp(newNode);
-						howManyElements++;
-						return;
+					int numberForNewNode = 	howManyElements;
+					//left = parent * 2 + 1;
+					//parent = (left-1)/2
+					//right = parent * 2 + 2;
+					int numberForNewNodeParent = (numberForNewNode-1-1)/2;
+					MyNode currentParent = getLastNodeByNumber(numberForNewNodeParent);
+					currentParent.setLeftChildNode(newNode);
+					newNode.setParrentNode(currentParent);
+					lastNode = newNode;
+					reHeapUp(newNode);
+					howManyElements++;
+					return;
 				}
 				
 				//pedejam blokam nav neviena berna 
@@ -178,25 +183,7 @@ public class MyLinkedHeap<Ttype> {
 			}
 		}
 	}
-	
-	private MyNode findInsertionNode() {
-		Queue<MyNode> queue = new LinkedList<>();
-		queue.add(rootNode);
-		while (!queue.isEmpty()) {
-		MyNode currentNode = queue.poll();
-		if (currentNode.getLeftChildNode() == null) {
-		return currentNode;
-		} else {
-		queue.add(currentNode.getLeftChildNode());
-		}
-		if (currentNode.getRightChildNode() == null) {
-		return currentNode;
-		} else {
-		queue.add(currentNode.getRightChildNode());
-		}
-		}
-		return null;
-		}
+
 	
 	private MyNode<Ttype> getLastNodeByNumber(int number) throws Exception{
 		if(number<1) {
