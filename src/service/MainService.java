@@ -1,6 +1,7 @@
 package service;
 
 import datastr.MyLinkedHeap;
+import model.Patient;
 
 public class MainService {
 
@@ -13,11 +14,29 @@ public class MainService {
 			kaudze.engueue(99);
 			kaudze.engueue(55);
 			kaudze.engueue(2);
-			kaudze.engueue(1);
 			kaudze.print();
-//			System.out.println("----------------------------------------------------------------------------");
-//			kaudze.degueue();
-//			kaudze.print();
+			System.out.println("----------------------------------------------------------------------------");
+			System.out.println("Max vertiba: " + kaudze.degueue());
+			kaudze.print();
+			//TODO kad last node partaists
+			
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		MyLinkedHeap<Patient> patients = new MyLinkedHeap<Patient>();
+		try {
+			System.out.println("----------------------------DARBIBAS AR PACIENTIEM------------------------------------------------");
+			patients.engueue(new Patient("Janis","Berzins",1));
+			patients.engueue(new Patient("Liga","Eglite",3));
+			patients.engueue(new Patient("Baiba","Kalnina",2));
+			patients.engueue(new Patient("Juris","Nejaukais",5));
+			patients.print();
+			System.out.println("----------------------------------------------------------------------------");
+			patients.degueue();
+			patients.print();
+			
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
