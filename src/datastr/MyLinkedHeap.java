@@ -1,5 +1,8 @@
 package datastr;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class MyLinkedHeap<Ttype> {
 	//Mainigie
 	private MyNode<Ttype> rootNode = null;
@@ -105,6 +108,17 @@ public class MyLinkedHeap<Ttype> {
 				return;
 			}
 			else {
+				//pedejam blokam abi berni
+				if(lastNode.getParrentNode().getLeftChildNode()!= null && lastNode.getParrentNode().getRightChildNode()!=null){
+						MyNode currentParent = findInsertionNode();
+						currentParent.setLeftChildNode(newNode);
+						newNode.setParrentNode(currentParent);
+						lastNode = newNode;
+						reHeapUp(newNode);
+						howManyElements++;
+						return;
+				}
+				
 				//pedejam blokam nav neviena berna 
 				if(lastNode.getLeftChildNode() == null && lastNode.getRightChildNode() == null) {
 					lastNode.setLeftChildNode(newNode);
@@ -115,8 +129,6 @@ public class MyLinkedHeap<Ttype> {
 					return;
 				}				
 			}
-
-			//TODO izveidot pedejo scenariju kurs no laba berna var parlekt uz blakus apakskoka kreiso bernu
 		}
 	}
 	
@@ -167,7 +179,27 @@ public class MyLinkedHeap<Ttype> {
 		}
 	}
 	
-	//pievienot bloku
+	private MyNode findInsertionNode() {
+		Queue<MyNode> queue = new LinkedList<>();
+		queue.add(rootNode);
+		while (!queue.isEmpty()) {
+		MyNode currentNode = queue.poll();
+		if (currentNode.getLeftChildNode() == null) {
+		return currentNode;
+		} else {
+		queue.add(currentNode.getLeftChildNode());
+		}
+		if (currentNode.getRightChildNode() == null) {
+		return currentNode;
+		} else {
+		queue.add(currentNode.getRightChildNode());
+		}
+		}
+		return null;
+		}
+	
+	
+	//dzest bloku
 	public void degueue() throws Exception{
 		// veicam visas pārbaudes
 		if(isEmpty()) {
