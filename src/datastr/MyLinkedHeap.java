@@ -198,29 +198,70 @@ public class MyLinkedHeap<Ttype> {
 		return null;
 		}
 	
-	
-	//dzest bloku
-	public void degueue() throws Exception{
+	//dzest bloku no MAX kaudzes
+	public Ttype degueue() throws Exception{
 		// veicam visas pārbaudes
 		if(isEmpty()) {
 			throw new Exception("Kaudze ir tukša, nevar dzest elementu!");
 		}
 		// saglabasim root elementu mainīgaja
-		MyNode<Ttype> TempNode = rootNode;
+		Ttype maxElement = rootNode.getElement();
+		
 		// pedejo bloka vertību ieliekam root blokā
 		rootNode.setElement(lastNode.getElement());
-		// samakzinam howManyElements
+		
+		//tagadejais pedejais mezgls vecaka kreisais berns
+		if(lastNode.getParrentNode().getLeftChildNode() == lastNode) {
+			lastNode.getParrentNode().setLeftChildNode(null);
+		}
+		//tagadejais pedejais mezgls vecaka labais berns
+		if(lastNode.getParrentNode().getRightChildNode() == lastNode) {
+			lastNode.getParrentNode().setRightChildNode(lastNode);
+		}
+		
+		// samazinam howManyElements
 		howManyElements--;
+		
 		// lastNode samainīt (level samazinat, kur tas ir nepieciešams)
 		
 		// reheapDown izsaukt
+		reHeapDown(rootNode);
 		
 		// atgriežam elementu, kurš bija sākumā saknes blokā
-		System.out.println(TempNode.getElement());
-		
+		return maxElement;
 	}
 	
-	
+	private void reHeapDown(MyNode<Ttype> nodeTemp) {
+		if(nodeTemp != null) {
+			//ja tikai viens berns un tas ir kreisais
+			if(nodeTemp.getLeftChildNode() != null && nodeTemp.getRightChildNode() == null) {
+				if(((Comparable)nodeTemp.getElement()).compareTo(nodeTemp.getLeftChildNode().getElement()) < 0) {
+					swap(nodeTemp,nodeTemp.getLeftChildNode());
+				}
+			}
+			//ja abi berni
+			else if (nodeTemp.getLeftChildNode() != null && nodeTemp.getRightChildNode() != null){
+				//parbaudam vai kreisais berns lielaks par labo
+				if(((Comparable)nodeTemp.getLeftChildNode().getElement()).compareTo(nodeTemp.getRightChildNode().getElement()) > 0) {
+					//vai kreisais berns lielaks par pasu bloku
+					if(((Comparable)nodeTemp.getLeftChildNode().getElement()).compareTo(nodeTemp.getElement()) > 0) {
+						swap(nodeTemp,nodeTemp.getLeftChildNode());
+						reHeapDown(nodeTemp.getLeftChildNode());
+					}
+				
+				
+				}
+				//parbaudam vai labais berns lielaks par kreiso
+				else {
+					//vai kreisais berns mazaks par pasu bloku
+					if(((Comparable)nodeTemp.getRightChildNode().getElement()).compareTo(nodeTemp.getElement()) > 0) {
+						swap(nodeTemp,nodeTemp.getRightChildNode());
+						reHeapDown(nodeTemp.getRightChildNode());
+					}
+				}
+			}
+		}
+	}
 	
 	
 }
