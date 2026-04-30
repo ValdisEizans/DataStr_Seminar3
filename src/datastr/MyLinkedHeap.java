@@ -198,6 +198,34 @@ public class MyLinkedHeap<Ttype> {
 		return null;
 		}
 	
+	private MyNode<Ttype> getLastNodeByNumber(int number) throws Exception{
+		if(number<1) {
+			throw new Exception("Kartas skaitlis nevar but mazaks par 1!");
+		}
+		
+		String binary = Integer.toBinaryString(number);
+
+		MyNode<Ttype> currentnode = rootNode;
+		
+		for(int i=1; i<binary.length(); i++) {
+			if(binary.charAt(i) == '0') {
+				currentnode = currentnode.getLeftChildNode();
+			}
+			else {
+				currentnode = currentnode.getRightChildNode();
+			}
+		}
+		return currentnode;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//dzest bloku
 	public void degueue() throws Exception{
